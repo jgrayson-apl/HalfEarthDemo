@@ -1,0 +1,27 @@
+{
+  "title": "Half Earth Test",
+  "appid": "",
+  "group": "",
+  "webmap": "",
+  "webscene": "94052daf8cab477281bdd27a4acd6d34",
+  "portalUrl": "https://www.arcgis.com",
+  "oauthappid": "hrFP8yDGOiGFx4ub",
+  "proxyUrl": "https://apl.esri.com/proxy/DotNet/proxy.ashx",
+  "units": "dual",
+  "helperServices": {
+    "geometry": {
+      "url": null
+    },
+    "printTask": {
+      "url": null
+    },
+    "elevationSync": {
+      "url": null
+    },
+    "geocode": [
+      {
+        "url": null
+      }
+    ]
+  }
+}
