@@ -300,7 +300,10 @@ define([
       //
       // INFO PANEL //
       //
-      const info_panel = domConstruct.create("div", { className: "panel panel-blue font-size-2 animate-fade-in", innerHTML: "Zoom in to view species info..." });
+      const info_panel = domConstruct.create("div", {
+        className: "panel panel-blue font-size-2 animate-fade-in",
+        innerHTML: "Zoom in to view species info..."
+      });
       view.ui.add(info_panel, "top-right");
 
       // TILED INDEX GRID //
