@@ -9,11 +9,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <!-- End Responsive -->
     <link rel=icon href="./assets/favicon.ico" sizes="32x32" type="image/vnd.microsoft.icon">
-    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.4/css/calcite-web.min.css">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css">
     <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
     <script src="./app/dojo.js"></script>
-    <script src="https://js.arcgis.com/4.10/"></script>
+    <script src="https://js.arcgis.com/4.11/"></script>
     <script>require(["Application/init"]);</script>
   </head>
   <body class="configurable-application--loading">
@@ -27,11 +27,9 @@
     <!-- MAIN CONTAINER -->
     <div id="main-container">
       <!-- LEFT CONTAINER -->
-      <div id="left-container" class="panel panel-white panel-no-border">
+      <div id="left-container" class="panel panel-white panel-no-border column-6">
         <!-- FEATURE CONTENT PANEL -->
-        <div class="panel panel-white panel-no-padding">
-          <div id="selected-feature-node"></div>
-        </div>
+        <div id="selected-features" class="panel panel-no-border"></div>
       </div>
       <!-- VIEW CONTAINER -->
       <div id="view-container"></div>

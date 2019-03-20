@@ -153,7 +153,7 @@ define([
       view.ui.add(home, { position: "top-left", index: 2 });
 
       // HALF EARTH //
-      this.initializeHalfEarthLayers(view);
+      //this.initializeHalfEarthLayers(view);
 
       // HIGHLIGHT //
       this.initializeHighlight(view);
@@ -164,202 +164,215 @@ define([
      *
      * @param view
      */
-    initializeHalfEarthLayers: function (view) {
+    /*  initializeHalfEarthLayers: function (view) {
 
-      const build_url_template = (type, category) => {
-        return `https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/${category}/${type}/{level}/{col}/{row}`;
-      };
+        const build_url_template = (type, category) => {
+          return `https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/${category}/${type}/{level}/{col}/{row}`;
+        };
 
-      const theme_infos = [
-        {
-          title: "Terrestrial Species",
-          scale: "~110km",
-          services: [
-            { type: "all", label: "All", categories: ["rarity", "richness"] },
-            { type: "birds", label: "Birds", categories: ["rarity", "richness"] },
-            { type: "cacti", label: "Cacti", categories: ["rarity", "richness"] },
-            { type: "conifers", label: "Conifers", categories: ["rarity", "richness"] },
-            { type: "mammals", label: "Mammals", categories: ["rarity", "richness"] },
-            { type: "turtles", label: "Turtles", categories: ["rarity", "richness"] }
-          ]
-        },
-        {
-          title: "Marine Species",
-          scale: "~50km",
-          services: [
-            { type: "fishes", label: "Fishes", categories: ["rarity", "richness"] }
-          ]
-        },
-        {
-          title: "Featured",
-          scale: "1km",
-          services: [
-            { type: "hummingbirds", label: "Hummingbirds", categories: ["rarity_1km", "richness_1km"] }
-          ]
-        },
-        {
-          title: "South Africa",
-          scale: "1km",
-          services: [
-            { type: "amphibians", label: "Amphibians", categories: ["rarity_1km", "richness_1km"] },
-            { type: "birds", label: "Birds", categories: ["rarity_1km", "richness_1km"] },
-            { type: "dragonflies", label: "Dragonflies", categories: ["rarity_1km", "richness_1km"] },
-            { type: "mammals", label: "Mammals", categories: ["rarity_1km", "richness_1km"] },
-            { type: "protea", label: "Protea", categories: ["rarity_1km", "richness_1km"] },
-            { type: "reptiles", label: "Reptiles", categories: ["rarity_1km", "richness_1km"] },
-            { type: "restio", label: "Restio", categories: ["rarity_1km", "richness_1km"] },
-          ]
-        }
-      ];
+        const theme_infos = [
+          {
+            title: "Terrestrial Species",
+            scale: "~110km",
+            services: [
+              { type: "all", label: "All", categories: ["rarity", "richness"] },
+              { type: "birds", label: "Birds", categories: ["rarity", "richness"] },
+              { type: "cacti", label: "Cacti", categories: ["rarity", "richness"] },
+              { type: "conifers", label: "Conifers", categories: ["rarity", "richness"] },
+              { type: "mammals", label: "Mammals", categories: ["rarity", "richness"] },
+              { type: "turtles", label: "Turtles", categories: ["rarity", "richness"] }
+            ]
+          },
+          {
+            title: "Marine Species",
+            scale: "~50km",
+            services: [
+              { type: "fishes", label: "Fishes", categories: ["rarity", "richness"] }
+            ]
+          },
+          {
+            title: "Featured",
+            scale: "1km",
+            services: [
+              { type: "hummingbirds", label: "Hummingbirds", categories: ["rarity_1km", "richness_1km"] }
+            ]
+          },
+          {
+            title: "South Africa",
+            scale: "1km",
+            services: [
+              { type: "amphibians", label: "Amphibians", categories: ["rarity_1km", "richness_1km"] },
+              { type: "birds", label: "Birds", categories: ["rarity_1km", "richness_1km"] },
+              { type: "dragonflies", label: "Dragonflies", categories: ["rarity_1km", "richness_1km"] },
+              { type: "mammals", label: "Mammals", categories: ["rarity_1km", "richness_1km"] },
+              { type: "protea", label: "Protea", categories: ["rarity_1km", "richness_1km"] },
+              { type: "reptiles", label: "Reptiles", categories: ["rarity_1km", "richness_1km"] },
+              { type: "restio", label: "Restio", categories: ["rarity_1km", "richness_1km"] },
+            ]
+          }
+        ];
 
-      const left_container = dom.byId("left-container");
-      theme_infos.reverse().forEach(theme_info => {
 
-        const panel = domConstruct.create("div", { className: "panel panel-blue trailer-quarter" }, left_container, "first");
+        /!*
+          Strict reserves
+          https://cartocdn-gusc-c.global.ssl.fastly.net/half-earth/api/v1/map/a9ab2355576896bccafb3dac94c637bf:1536331169140/9/140/216.png
+          Biosphere reserves
+          https://cartocdn-gusc-b.global.ssl.fastly.net/half-earth/api/v1/map/0aceb3b800f1eb6f27a73a4f7a02d716:1536331169140/9/141/217.png
+          Other
+          https://cartocdn-gusc-c.global.ssl.fastly.net/half-earth/api/v1/map/f54eab31f7cafc6d51094f6a27bc4c85:1536331169140/9/141/218.png
+          Community-based
+          https://cartocdn-gusc-a.global.ssl.fastly.net/half-earth/api/v1/map/3f57b3ea14414a2685028cf18aa24690:1536846581619/7/35/54.png
 
-        const theme_title_node = domConstruct.create("div", { className: "icon-ui-down esri-interactive trailer-quarter", innerHTML: theme_info.title }, panel);
-        on(theme_title_node, "click", () => {
-          domClass.toggle(theme_title_node, "icon-ui-down icon-ui-right");
-          query(".service-panel", panel).toggleClass("hide");
+          Land-use pressures
+            All land-use pressures
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/human-pressures/esa/1km/100p-layers/all/7/35/54
+            Irrigated and Large Agriculture
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/human-pressures/esa/1km/100p-layers/agriculture/9/141/217
+            Small and rainfed agriculture
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/human-pressures/esa/1km/100p-layers/rainfed/10/281/436
+            Urban area
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/human-pressures/esa/1km/100p-layers/urban/8/68/108
+
+          Marine fishing activity
+            All marine fishing types
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/all/7/35/53
+            Drifting longlines
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/drifting_longlines/10/283/434
+            Fixed gear
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/fixed_gear/8/70/108
+            Other
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/other/8/70/108
+            Purse seins
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/purse_seines/8/70/108
+            Trawlers
+            https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/trawlers/8/70/108
+        *!/
+
+
+        const left_container = dom.byId("left-container");
+        theme_infos.reverse().forEach(theme_info => {
+
+          const panel = domConstruct.create("div", { className: "panel panel-blue trailer-quarter" }, left_container, "first");
+
+          const theme_title_node = domConstruct.create("div", { className: "icon-ui-down esri-interactive trailer-quarter", innerHTML: theme_info.title }, panel);
+          on(theme_title_node, "click", () => {
+            domClass.toggle(theme_title_node, "icon-ui-down icon-ui-right");
+            query(".service-panel", panel).toggleClass("hide");
+          });
+
+          domConstruct.create("span", { className: "font-size--3 avenir-italic right", innerHTML: theme_info.scale }, theme_title_node);
+
+
+          theme_info.services.forEach(service_info => {
+
+            const type_layer = new GroupLayer({ title: service_info.label, visibilityMode: "exclusive", visible: false });
+            view.map.add(type_layer);
+
+            // SERVICE PANEL //
+            const service_panel = domConstruct.create("div", { className: "service-panel panel panel-dark-blue panel-no-padding padding-left-1 padding-right-1 text-off-black trailer-quarter" }, panel);
+
+            // SERVICE SWITCH
+            const service_switch = domConstruct.create("label", { className: "service-switch toggle-switch leader-half trailer-quarter" }, service_panel);
+            const service_input = domConstruct.create("input", { type: "checkbox", className: "toggle-switch-input" }, service_switch);
+            on(service_input, "change", () => {
+              query(".categories-node", service_panel).toggleClass("hide");
+              type_layer.visible = service_input.checked;
+            });
+            domConstruct.create("span", { className: "toggle-switch-track margin-right-half" }, service_switch);
+            domConstruct.create("span", { className: "toggle-switch-label text-white font-size--1", innerHTML: service_info.label }, service_switch);
+
+
+            //
+            // CATEGORIES
+            //
+            const categories_node = domConstruct.create("div", { className: "categories-node animate-fade-in right hide" }, service_panel, "first");
+            const categories_list = domConstruct.create("fieldset", { className: "radio-group font-size--3 trailer-0" }, categories_node);
+            service_info.categories.forEach((category, categoryIdx) => {
+              const name = `${theme_info.title}-${service_info.type}`;
+              const id = `${name}-${category}`;
+
+              const layer = new WebTileLayer({
+                title: id,
+                urlTemplate: build_url_template(service_info.type, category),
+                visible: (categoryIdx === 0),
+                opacity: 0.8
+              });
+              type_layer.layers.add(layer);
+
+              const category_input = domConstruct.create("input", { id: id, name: name, type: "radio", className: "radio-group-input", checked: (categoryIdx === 0) }, categories_list);
+              on(category_input, "change", () => {
+                if(category_input.checked) {
+                  layer.visible = true;
+                }
+              });
+              domConstruct.create("label", { for: id, className: "radio-group-label trailer-0", innerHTML: category }, categories_list);
+
+            });
+          });
+
+          theme_title_node.click();
+
         });
 
-        domConstruct.create("span", { className: "font-size--3 avenir-italic right", innerHTML: theme_info.scale }, theme_title_node);
-
-
-        theme_info.services.forEach(service_info => {
-
-          const type_layer = new GroupLayer({ title: service_info.label, visibilityMode: "exclusive", visible: false });
-          view.map.add(type_layer);
-
-          // SERVICE PANEL //
-          const service_panel = domConstruct.create("div", { className: "service-panel panel text-off-black trailer-quarter" }, panel);
-
-          // SERVICE SWITCH
-          const service_switch = domConstruct.create("label", { className: "service-switch toggle-switch leader-half trailer-quarter" }, service_panel);
-          const service_input = domConstruct.create("input", { type: "checkbox", className: "toggle-switch-input" }, service_switch);
-          on(service_input, "change", () => {
-            query(".categories-node", service_panel).toggleClass("hide");
-            type_layer.visible = service_input.checked;
-          });
-          domConstruct.create("span", { className: "toggle-switch-track margin-right-half" }, service_switch);
-          domConstruct.create("span", { className: "toggle-switch-label font-size--1", innerHTML: service_info.label }, service_switch);
-
-
-          //
-          // CATEGORIES
-          //
-          const categories_node = domConstruct.create("div", { className: "categories-node animate-fade-in right hide" }, service_panel, "first");
-          const categories_list = domConstruct.create("fieldset", { className: "radio-group font-size--3 trailer-0" }, categories_node);
-          service_info.categories.forEach((category, categoryIdx) => {
-            const name = `${theme_info.title}-${service_info.type}`;
-            const id = `${name}-${category}`;
-
-            const layer = new WebTileLayer({
-              title: id,
-              urlTemplate: build_url_template(service_info.type, category),
-              visible: (categoryIdx === 0),
-              opacity: 0.8
-            });
-            type_layer.layers.add(layer);
-
-            const category_input = domConstruct.create("input", { id: id, name: name, type: "radio", className: "radio-group-input", checked: (categoryIdx === 0) }, categories_list);
-            on(category_input, "change", () => {
-              if(category_input.checked) {
-                layer.visible = true;
-              }
-            });
-            domConstruct.create("label", { for: id, className: "radio-group-label trailer-0", innerHTML: category }, categories_list);
-
-          });
-        });
-
-        theme_title_node.click();
-
-      });
-
-    },
+      },*/
 
     /**
      *
      * @param view
      */
     initializeHighlight: function (view) {
-
-      // Firefly Basemap With Labels //
-      //view.map.basemap = new Basemap({ portalItem: { id: "43ba24f2666c4fa3a3ec2079656d40e7" } });
-
-
+                                                   
       //
-      // FEATURE - DISPLAY FEATURE CONTENT BASED ON FEATURE.POPUPTEMPLATE OR FEATURE.LAYER.POPUPTEMPLATE
+      // FEATURE INDEX LAYERS //
       //
-      const feature_widget = new Feature({
-        container: "selected-feature-node",
-        view: view
-      });
+      const index_layer_titles = ["Fishes Features", "Birds Features"];
+      const index_layer_infos = new Map();
+      const index_layers = [];
 
-      //
-      // INFO PANEL //
-      //
-      const info_panel = domConstruct.create("div", {
-        className: "panel panel-blue font-size-2 animate-fade-in",
-        innerHTML: "Zoom in to view species info..."
-      });
-      view.ui.add(info_panel, "top-right");
-
-      // TILED INDEX GRID //
-      const indexGridsTiledLayer = view.map.layers.find(layer => {
-        return (layer.title === "Index Grids Tiled");
-      });
-      indexGridsTiledLayer.load().then(() => {
-        /*...*/
-      });
-
-      //
-      // FEATURE INDEX GRIDS //
-      //
-      const index_layer_titles = ["Index Grid Land", "Index Grid Water"];
-      const index_layer_views = new Map();
-      view.map.layers.forEach(indexLayer => {
+      view.map.allLayers.forEach(indexLayer => {
         if(index_layer_titles.includes(indexLayer.title)) {
           // WAIT FOR LAYER TO BE LOADED //
           indexLayer.load().then(() => {
-
-            // OVERRIDE DEFAULT MIN SCALE //
-            indexLayer.minScale = 10000000;
-            // MAKE LAYER VISIBLE
-            indexLayer.visible = true;
+            indexLayer.outFields = ["*"];
 
             // GET LAYERVIEW WHEN READY //
             view.whenLayerView(indexLayer).then(indexLayerView => {
-              // SET LAYERVIEW BASED ON LAYER //
-              index_layer_views.set(indexLayer, indexLayerView);
+              watchUtils.whenNotOnce(indexLayerView, "updating").then(() => {
 
-              //
-              // INDEX LAYER SUSPENDED //
-              //   TODO: WE ONLY NEED THIS ON ONE OF THE LAYERS...
-              //
-              indexLayerView.watch("suspended", suspended => {
-                view.container.style.cursor = suspended ? "default" : "pointer";
-                domClass.toggle(info_panel, "hide", !suspended);
-                if(suspended) {
-                  feature_widget.graphic = null;
-                }
+                const layerInfoPanel = domConstruct.create("div", { className: "panel trailer-half" }, "selected-features");
+                const layerTitleLabel = domConstruct.create("label", { className: "font-size-2 text-blue", innerHTML: indexLayer.title }, layerInfoPanel);
+                const layerScaleNode = domConstruct.create("div", { className: "font-size-0 text-center hide", innerHTML: "NOT IN SCALE" }, layerInfoPanel);
+                const featureInfo = new Feature({ container: layerInfoPanel, view: view, spinnerEnabled: false });
+
+                // SET LAYERVIEW BASED ON LAYER //
+                index_layer_infos.set(indexLayer, { highlight: null, layerView: indexLayerView, featureInfo: featureInfo });
+                index_layers.push(indexLayer);
+
+                //
+                // INDEX LAYER SUSPENDED //
+                //
+                indexLayerView.watch("suspended", suspended => {
+                  view.container.style.cursor = suspended ? "default" : "pointer";
+                  domClass.toggle(layerScaleNode, "hide", !suspended);
+                  if(suspended) {
+                    featureInfo.graphic = null;
+                  }
+                });
+
               });
-
             });
           });
         }
       });
 
       //
-      // FIND INDEX GRID BASED ON POINTER EVENT //
+      // FIND INDEX GRID BASED ON A POINTER EVENT //
       //
       const findIndexGrid = (evt) => {
-        return view.hitTest(evt).then(hitTestResponse => {
-          const binResult = hitTestResponse.results.find(result => {
-            return (result.graphic && result.graphic.layer && index_layer_titles.includes(result.graphic.layer.title));
+        return view.hitTest(evt, { include: index_layers }).then(hitTestResponse => {
+          return hitTestResponse.results.map(hitResult => {
+            return hitResult.graphic;
           });
-          return (binResult) ? binResult.graphic : null;
         });
       };
 
@@ -367,26 +380,28 @@ define([
       // VIEW HIGHLIGHT OPTIONS //
       //
       view.highlightOptions = {
-        color: "white",
-        haloOpacity: 0.8,
-        fillOpacity: 0.2
+        color: "red",
+        haloOpacity: 1.0,
+        fillOpacity: 0.5
       };
 
       //
       // VIEW POINTER MOVE - HIGHLIGHT INDEX GRID CELL //
       //
-      let highlight = null;
+      let find_handle = null;
       view.on("pointer-move", evt => {
-        highlight && highlight.remove();
-        findIndexGrid(evt).then(indexGridFeature => {
-          if(indexGridFeature) {
-            const layerView = index_layer_views.get(indexGridFeature.layer);
-            if(layerView) {
-              highlight = layerView.highlight(indexGridFeature);
-              feature_widget.graphic = indexGridFeature;
-            } else {
-              feature_widget.graphic = null;
-            }
+
+        //find_handle && (!find_handle.isFulfilled()) && find_handle.cancel();
+        find_handle = findIndexGrid(evt).then(indexGridFeatures => {
+          if(indexGridFeatures) {
+            indexGridFeatures.forEach(indexGridFeature => {
+              const layerInfo = index_layer_infos.get(indexGridFeature.layer);
+              if(layerInfo) {
+                layerInfo.highlight && layerInfo.highlight.remove();
+                layerInfo.highlight = layerInfo.layerView.highlight(indexGridFeature);
+                layerInfo.featureInfo.graphic = indexGridFeature;
+              }
+            });
           }
         });
       });
